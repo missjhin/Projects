@@ -1,2 +1,3 @@
-# Web-Dev-Projects
-web dev laboratories and activities 
+# PROJECTS
+posting for laboratories, activities and any of my projects
+for future references
