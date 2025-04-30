@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Diary</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            background: url('https://i.pinimg.com/736x/93/41/fd/9341fd2335b26d2fb857d18b27cab8d5.jpg'); 
+            background-size: contain;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(192, 19, 100, 0.2);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h2 {
+            color: dodgerblue; 
+            font-size: 26px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            color: dodgerblue;
+            text-align: left;
+        }
+        input, textarea {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid rgb(245, 97, 158); 
+            border-radius: 12px;
+            font-size: 14px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        textarea {
+            resize: none;
+        }
+        button {
+            width: 100%;
+            background-color: dodgerblue;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: royalblue;
+        }
+        .entry {
+            background:  lavenderblush;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 5px solid rgb(146, 200, 253);
+            border-radius: 12px;
+            text-align: left;
+        }
+        .entry h3 {
+            color: royalblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>💎 My Diary 💎</h2>
+        <form id="diaryForm">
+            <label for="date">Date:</label>
+            <input type="date" id="date" required>
+            
+            <label for="feeling">Feeling:</label>
+            <input type="text" id="feeling" required>
+            
+            <label for="content">Your Entry:</label>
+            <textarea id="content" rows="4" required></textarea>
+            
+            <button type="submit">Save Entry</button>
+        </form>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        document.getElementById('diaryForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let date = document.getElementById('date').value;
+            let feeling = document.getElementById('feeling').value;
+            let content = document.getElementById('content').value;
+            
+            let entry = `<div class="entry">
+                            <h3>${date}</h3>
+                            <p><strong>Feeling:</strong> ${feeling}</p>
+                            <p>${content}</p>
+                        </div>`;
+            
+            document.getElementById('output').innerHTML += entry;
+            document.getElementById('diaryForm').reset();
+        });
+    </script>
+</body>
+</html>

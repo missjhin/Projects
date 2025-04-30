@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://i.pinimg.com/736x/5b/45/c1/5b45c1c8f81a835f1d4abf5f048e34d0.jpg');
+            background-size: cover;
+            margin: 0;
+        }
+        .container {
+            background: #fab7d8;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            text-align: center;
+        }
+        h2 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        input {
+            width: 70%;
+            padding: 8px;
+            border: 2px solid #ff69b4;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+        button {
+            padding: 8px 12px;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            background: #ffecf2;
+            box-shadow: 0px 0px 5px rgba(108, 2, 60, 0.1);
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .delete-btn {
+            color: white;
+            background: #ff69b4;
+            border: none;
+            padding: 5px 8px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎀 To-Do List 🎀</h2>
+    <input type="text" id="taskInput" placeholder="Add a new task">
+    <button onclick="addTask()">Add</button>
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", loadTasks);
+    
+    function addTask() {
+        let input = document.getElementById("taskInput");
+        let taskText = input.value.trim();
+
+        if (taskText === "") {
+            alert("Please enter a task!");
+            return;
+        }
+
+        let ul = document.getElementById("taskList");
+        let li = document.createElement("li");
+
+        let taskSpan = document.createElement("span");
+        taskSpan.textContent = taskText;
+        taskSpan.onclick = function () {
+            this.classList.toggle("completed");
+            saveTasks();
+        };
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "X";
+        deleteBtn.className = "delete-btn";
+        deleteBtn.onclick = function () {
+            if (confirm("Are you sure you want to delete?")) {
+                ul.removeChild(li);
+                saveTasks();
+            }
+        };
+
+        li.appendChild(taskSpan);
+        li.appendChild(deleteBtn);
+        ul.appendChild(li);
+
+        input.value = "";
+        saveTasks();
+    }
+
+    function saveTasks() {
+        let tasks = [];
+        document.querySelectorAll("#taskList li span").forEach(task => {
+            tasks.push({ text: task.textContent, completed: task.classList.contains("completed") });
+        });
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function loadTasks() {
+        let savedTasks = localStorage.getItem("tasks");
+        if (savedTasks) {
+            let tasks = JSON.parse(savedTasks);
+            let ul = document.getElementById("taskList");
+            tasks.forEach(task => {
+                let li = document.createElement("li");
+                let taskSpan = document.createElement("span");
+                taskSpan.textContent = task.text;
+                if (task.completed) {
+                    taskSpan.classList.add("completed");
+                }
+                taskSpan.onclick = function () {
+                    this.classList.toggle("completed");
+                    saveTasks();
+                };
+
+                let deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "X";
+                deleteBtn.className = "delete-btn";
+                deleteBtn.onclick = function () {
+                    if (confirm("Are you sure you want to delete?")) {
+                        ul.removeChild(li);
+                        saveTasks();
+                    }
+                };
+
+                li.appendChild(taskSpan);
+                li.appendChild(deleteBtn);
+                ul.appendChild(li);
+            });
+        }
+    }
+</script>
+
+</body>
+</html>

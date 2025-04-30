@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary Form - Lab 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            max-width: 600px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+        .entry {
+            margin-top: 20px;
+            padding: 10px;
+            background: #fff;
+            border-left: 5px solid #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Diary Entry - Lab 2</h2>
+        <form id="diaryForm">
+            <label for="date">Date:</label>
+            <input type="date" id="date" required><br><br>
+            
+            <label for="feeling">What are you feeling today?</label>
+            <input type="text" id="feeling" required><br><br>
+            
+            <label for="content">Diary Content:</label>
+            <textarea id="content" required></textarea><br><br>
+            
+            <button type="submit">Save Entry</button>
+        </form>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        document.getElementById('diaryForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let date = document.getElementById('date').value;
+            let feeling = document.getElementById('feeling').value;
+            let content = document.getElementById('content').value;
+            
+            let entry = `<div class="entry">
+                            <h3>${date}</h3>
+                            <p><strong>Feeling:</strong> ${feeling}</p>
+                            <p>${content}</p>
+                        </div>`;
+            
+            document.getElementById('output').innerHTML = entry;
+        });
+    </script>
+</body>
+</html>
